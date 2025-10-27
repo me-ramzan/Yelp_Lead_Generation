@@ -1,0 +1,400 @@
+{
+  "name": "Real Estate Yelp",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2480,
+        192
+      ],
+      "id": "5a72d2c1-0078-496d-9eb2-1b6311a59497",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}?token=apify_api_qUAQKgZnjCTwYzqQJzXQNLfgeyh5jS42cLK9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2048,
+        192
+      ],
+      "id": "c0b56bd2-a3cb-4c6c-b243-911d65add2b1",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "41d9e553-8fa8-4a1e-be59-64a1e8d00bab",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "SUCCEEDED",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1776,
+        192
+      ],
+      "id": "f2614320-a4e2-4a98-8033-367fd7f76b4c",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1744,
+        352
+      ],
+      "id": "b3ee05ff-7fbf-4937-9d61-cf0e01f0c36e",
+      "name": "Wait",
+      "webhookId": "1b6c4fba-05db-4460-a804-58ea6ca46cee"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $json.data.defaultDatasetId }}/items?token=apify_api_qUAQKgZnjCTwYzqQJzXQNLfgeyh5jS42cLK9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1568,
+        80
+      ],
+      "id": "3b36156a-fc75-4656-9ede-ecfd23891e22",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1mgoCWazsIzZ1Z0ZxaBzuM7x17XyaI0gW3ppTPgNPpOM/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mgoCWazsIzZ1Z0ZxaBzuM7x17XyaI0gW3ppTPgNPpOM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.username }}",
+            "Email": "=",
+            "Client Name": "={{ $json.fullName }}",
+            "Phone Number": "=",
+            "Company Name": "={{ $json.businessCategoryName }}",
+            "Address": "=",
+            "State": "=",
+            "States Operational In": "="
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Client Name",
+              "displayName": "Client Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "State",
+              "displayName": "State",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "States Operational In",
+              "displayName": "States Operational In",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type of Investing",
+              "displayName": "Type of Investing",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1344,
+        80
+      ],
+      "id": "ef0beeca-8465-4200-a055-a42135d5f127",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Ul1utzQ8WWqHmupx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1120,
+        80
+      ],
+      "id": "00449d85-ecc7-4fa8-b85a-ea7c88a5fc9f",
+      "name": "Wait1",
+      "webhookId": "25760c2d-c189-4977-a6b1-1fba5eeacc5c"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1mgoCWazsIzZ1Z0ZxaBzuM7x17XyaI0gW3ppTPgNPpOM/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mgoCWazsIzZ1Z0ZxaBzuM7x17XyaI0gW3ppTPgNPpOM/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -896,
+        80
+      ],
+      "id": "b54b4aac-0c14-4128-bbcb-89fda92a4a15",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Ul1utzQ8WWqHmupx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/BxxFJax5cSD2VeXkV/runs?token=apify_api_pPNdeO1bzp6c4bwB3J8IZJCZ8Ow52h4ebLaM",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "{\n    \"keywords\": [\n      \"Real Estate\",\n      \"\"Rental Investor\"\n    ],\n    \"locations\": [\n      \"Texas\",\n      \"Florida\"\n    ],\n    \"languages\": \"English (United States)\",\n    \"sort\": \"Recommended\",\n    \"price\": [],\n    \"maxCrawlPages\": 3,\n    \"unique_only\": false,\n    ]\n  }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2288,
+        160
+      ],
+      "id": "58a42c10-c5e0-4090-b0b0-43412941f11b",
+      "name": "HTTP Request3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "598b32d5-bd1e-4a7b-a366-8124868ba620",
+  "meta": {
+    "instanceId": "e08608bb3cc6241ab47739ddf438bc2f4d3f12dec51cc8f299735b38bcacd5f6"
+  },
+  "id": "5dz1fyeW4QeT6iar",
+  "tags": []
+}
